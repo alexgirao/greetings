@@ -1,15 +1,12 @@
 package com.acme.labs.spring.webflux.controller;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 import com.acme.labs.common.Greeting;
-
+import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
@@ -58,7 +55,6 @@ public class GreetingController {
             Greeting greeting = new Greeting(counter.incrementAndGet(), String.format(template, value), delayInMillis);
             return ResponseEntity.status(HttpStatus.CREATED).body(greeting);
         });
-        // return res.subscribeOn(Schedulers.boundedElastic());
-        return res.subscribeOn(Schedulers.elastic());
+        return res.subscribeOn(Schedulers.boundedElastic());
     }
 }
